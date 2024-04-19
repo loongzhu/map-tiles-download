@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>map</title>
+
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script
+      src="https://unpkg.com/leaflet/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+
+    <script src="https://unpkg.com/proj4/dist/proj4-src.js"></script>
+
+    <script src="https://unpkg.com/proj4leaflet/src/proj4leaflet.js"></script>
+
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      /* Set the size of the map */
+      #map {
+        height: 100vh;
+        width: 100%;
+      }
+    </style>
+
+    <script type="module">
+      // https://epsg.io/
+      L.CRS.E3857 = new L.Proj.CRS(
+        "EPSG:3857",
+        "+proj=merc +a=6378137 +b=6378137 +lat_ts=0 +lon_0=0 +x_0=0 +y_0=0 +k=1 +units=m +nadgrids=@null +wktext +no_defs +type=crs",
+        {
+          resolutions: (function () {
+            var level = 16;
+            var res = [];
+            res[0] = Math.pow(2, level);
+            for (var i = 1; i < level - 5; i++) {
+              res[i] = Math.pow(2, level - i);
+            }
+            return res;
+          })(),
+          origin: [0.0, 0.0],
+          bounds: L.bounds(
+            [-20037508.34, -20048966.1],
+            [20037508.34, 20048966.1]
+          ),
+        }
+      );
+
+      const map = L.map("map", {
+        center: [39.9042, 116.4074],
+        zoom: 5,
+        minZoom: 3,
+        maxZoom: 19,
+        attributionControl: false,
+        crs: L.CRS.EPSG3857,
+      });
+
+      L.tileLayer("./tiles/{z}/{x}/{y}.png", {
+        attribution: "Download map tiles test",
+        transparent: true,
+      }).addTo(map);
+
+      L.control.attribution({ prefix: false }).addTo(map);
+
+      map.setMaxBounds([
+        [-85.06, -180.0],
+        [85.06, 180.0],
+      ]);
+
+      map.on("click", function (e) {
+        console.log("You clicked the map at " + e.latlng);
+      });
+
+      map.on("zoom", function (e) {
+        console.log("You zoomed the map to " + map.getZoom());
+      });
+    </script>
+  </head>
+  <body>
+    <div id="map"></div>
+  </body>
+</html>
