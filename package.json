@@ -1,0 +1,15 @@
+{
+  "name": "map-tiles-download",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "deno run --allow-net --allow-write --allow-read --allow-env --allow-sys main.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ora": "^8.0.1"
+  }
+}

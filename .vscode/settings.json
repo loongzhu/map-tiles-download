@@ -1,0 +1,14 @@
+{
+  "deno.enable": true, // Enable Deno support in the editor
+
+  "deno.lint": true,
+  "editor.formatOnSave": true,
+
+  "deno.unstable": false, // Enable unstable Deno APIs
+
+  "deno.maxTsServerMemory": 10240, // Max memory for the TS server
+
+  "typescript.tsserver.experimental.enableProjectDiagnostics": true,
+
+  "[typescript]": { "editor.defaultFormatter": "denoland.vscode-deno" }
+}
